@@ -13,6 +13,7 @@ import Cart from './components/Cart.jsx'
 
 import { useState } from 'react'
 import SearchSlide from './components/SearchSlide.jsx'
+import Footer from './components/Footer.jsx'
 function App() {
  
   const [isSearchSliderOpen, setIsSearchSliderOpen] = useState(false);
@@ -39,6 +40,7 @@ function App() {
       <Route path='/contact'element={<Contact />} />
       <Route path='/shop'element={<Shop />} />
     </Routes>
+    <Footer />
     </>
   )
 }
