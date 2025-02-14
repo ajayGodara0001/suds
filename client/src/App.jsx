@@ -6,7 +6,6 @@ import Login from './components/Login.jsx'
 import Register from './components/Signup.jsx'
 import Home from './Home/Home.jsx'
 import About from './components/About.jsx'
-import { Contact } from 'lucide-react'
 import Shop from './components/Shop.jsx'
 import Navbar from './components/Navbar.jsx'
 import Cart from './components/Cart.jsx'
@@ -14,6 +13,7 @@ import Cart from './components/Cart.jsx'
 import { useState } from 'react'
 import SearchSlide from './components/SearchSlide.jsx'
 import Footer from './components/Footer.jsx'
+import Contact from './components/Contact.jsx'
 function App() {
  
   const [isSearchSliderOpen, setIsSearchSliderOpen] = useState(false);

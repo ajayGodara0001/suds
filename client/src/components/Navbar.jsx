@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Menu, X, Search, ShoppingCart, User } from "lucide-react";
- import logo from "../../public/output.png" 
+ import logo from "../../public/logo.png" 
 import { NavLink } from "react-router-dom";
 
 export default function Navbar({toggleSearchSlider, toggleCardSlider }) {
@@ -32,7 +32,7 @@ export default function Navbar({toggleSearchSlider, toggleCardSlider }) {
         <div className="flex items-center space-x-4 text-gray-700">
           <Search size={24} onClick={toggleSearchSlider} className="cursor-pointer" />
           <ShoppingCart size={24} onClick={toggleCardSlider} className="cursor-pointer" />
-          <NavLink to="/login" ><User size={24} /></NavLink>
+          <NavLink to="/login"  ><User size={24} /></NavLink>
         </div>
       </div>
 

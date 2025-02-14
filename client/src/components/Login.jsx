@@ -24,7 +24,7 @@ export default function Login() {
 
         <div className="flex flex-row justify-between mb-5  items-center">
           <h2 className="text-2xl font-semibold ">Login</h2>
-        <span> <X onClick={back} className="bg-gray-500 rounded-md px-2 hover:scale-110 cursor-pointer " size={28} /></span></div>
+          <span> <X onClick={back} className=" rounded-md px-2 hover:scale-125  cursor-pointer " size={40} /></span></div>
         <form onSubmit={handleSubmit(onSubmit)}>
           <input
             type="email"
