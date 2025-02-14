@@ -1,16 +1,24 @@
 import { useState } from "react";
-import { Menu, X, Search, ShoppingCart, User } from "lucide-react";
+import { Menu, X, Search, ShoppingCart, User, LogOut  } from "lucide-react";
  import logo from "../../public/logo.png" 
 import { NavLink } from "react-router-dom";
+import { isAuthenticated } from "../auth/auth.js";
 
 export default function Navbar({toggleSearchSlider, toggleCardSlider }) {
   const [isOpen, setIsOpen] = useState(false);
 
+  const mobileLoginhandle = () => {
+    setIsOpen(false)
+    localStorage.removeItem("sudsUser")
+    window.location.reload()
+
+  }
+  const yes = isAuthenticated()
   return (
     <nav className="sticky top-0 w-full bg-white shadow-md z-50">
       <div className="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
         {/* Left Side: Hamburger Menu (Mobile) */}
-        <button className="md:hidden  text-gray-700" onClick={() => setIsOpen(true)}>
+        <button className="md:hidden  text-gray-700 cursor-pointer"  onClick={() => setIsOpen(true)}>
           <Menu size={28} />
         </button>
 
@@ -32,7 +40,10 @@ export default function Navbar({toggleSearchSlider, toggleCardSlider }) {
         <div className="flex items-center space-x-4 text-gray-700">
           <Search size={24} onClick={toggleSearchSlider} className="cursor-pointer" />
           <ShoppingCart size={24} onClick={toggleCardSlider} className="cursor-pointer" />
-          <NavLink to="/login"  ><User size={24} /></NavLink>
+          {
+            yes?<NavLink onClick={mobileLoginhandle} c > <LogOut  /></NavLink>
+            :<NavLink to="/login"  ><User size={24} /></NavLink>
+          }
         </div>
       </div>
 
@@ -57,9 +68,14 @@ export default function Navbar({toggleSearchSlider, toggleCardSlider }) {
 
         {/* Bottom Section: Login & Close Button */}
         <div className="p-5 flex flex-col space-y-4" >
-          <NavLink onClick={() => setIsOpen(false)} to="/login" className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 flex items-center justify-center">
-            <User size={20} className="mr-2" />Login   
-          </NavLink>
+        {
+        yes?<NavLink onClick={mobileLoginhandle} to="/" className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 flex items-center justify-center gap-3">
+        <LogOut  />Logout   
+      </NavLink>
+         :<NavLink onClick={() => setIsOpen(false)} to="/login" className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 flex items-center justify-center">
+        <User size={20} className="mr-2" />Login   
+      </NavLink>
+        }
           <button
             className="px-4 py-2 bg-gray-300 text-gray-800 rounded-lg cursor-pointer hover:bg-gray-400"
             onClick={() => setIsOpen(false)}

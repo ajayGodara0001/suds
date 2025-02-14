@@ -1,28 +1,52 @@
 import { useForm } from "react-hook-form";
 import { NavLink, useNavigate } from "react-router-dom";
-import {  X, Menu } from "lucide-react";
+import { X, Menu } from "lucide-react";
+import toast from 'react-hot-toast';
+
+import axios from "axios"
+import { useState } from "react";
+
 
 export default function Register() {
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate()
-  const back = () =>{
+  const back = () => {
     navigate("/")
-}
+  }
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data) => {
-    console.log("Registering with", data);
+  const onSubmit = async (data) => {
+    setLoading(true);
+    const newUser = {
+      email: data.email,
+      name: data.name,
+      password: data.password
+    }
+    const backend_url = import.meta.env.VITE_BACKEND_URI
+    await axios.post(`${backend_url}/api/auth/register`, newUser)
+      .then((res) => {
+        navigate("/verification")
+      })
+      .catch((error) => {
+        console.error("Error:", error.response?.data || error.message);
+              toast.error(error.response?.data?.message ||  error.message);
+        
+      })
+      .finally(() => {
+        setLoading(false); // Enable button again if needed
+      });
   };
 
   return (
     <div className="flex flex-col items-center justify-center h-screen bg-gray-100">
       <div className="bg-white p-6 rounded-2xl shadow-lg w-96 text-center">
         <div className="flex  flex-row justify-between mb-5  items-center">
-        <h2 className="text-2xl font-semibold ">Register</h2>
-        <span> <X onClick={back} className=" rounded-md px-2 hover:scale-125  cursor-pointer " size={40} /></span>
+          <h2 className="text-2xl font-semibold ">Register</h2>
+          <span> <X onClick={back} className=" rounded-md px-2 hover:scale-125  cursor-pointer " size={40} /></span>
         </div>
         <form onSubmit={handleSubmit(onSubmit)}>
           <input
@@ -32,7 +56,7 @@ export default function Register() {
             {...register("name", { required: "Name is required" })}
           />
           {errors.name && <p className="text-red-500 text-sm mb-2">{errors.name.message}</p>}
-          
+
           <input
             type="email"
             placeholder="Email"
@@ -40,7 +64,7 @@ export default function Register() {
             {...register("email", { required: "Email is required" })}
           />
           {errors.email && <p className="text-red-500 text-sm mb-2">{errors.email.message}</p>}
-          
+
           <input
             type="password"
             placeholder="Password"
@@ -48,16 +72,20 @@ export default function Register() {
             {...register("password", { required: "Password is required" })}
           />
           {errors.password && <p className="text-red-500 text-sm mb-2">{errors.password.message}</p>}
+
           
           <button
             type="submit"
-            className="w-full bg-green-500 text-white py-2 rounded-lg hover:bg-green-600 transition"
+            className={`w-full text-white py-2 rounded-lg transition ${loading ? "bg-gray-400 cursor-not-allowed" : "bg-green-500 hover:bg-green-600"
+              }`}
+            disabled={loading}
           >
-            Register
+            {loading ? "Registering..." : "Register"}
           </button>
+
         </form>
         <hr className="my-4" />
-       <NavLink to="/login" className="text-blue-500 font-semibold">Back to Login</NavLink>
+        <NavLink to="/login" className="text-blue-500 font-semibold">Back to Login</NavLink>
       </div>
     </div>
   );

@@ -14,6 +14,7 @@ import { useState } from 'react'
 import SearchSlide from './components/SearchSlide.jsx'
 import Footer from './components/Footer.jsx'
 import Contact from './components/Contact.jsx'
+import OtpVerification from './components/VerifyEmail.jsx'
 function App() {
  
   const [isSearchSliderOpen, setIsSearchSliderOpen] = useState(false);
@@ -39,6 +40,7 @@ function App() {
       <Route path='/about'element={<About />} />
       <Route path='/contact'element={<Contact />} />
       <Route path='/shop'element={<Shop />} />
+      <Route path='/verification' element={<OtpVerification />} />
     </Routes>
     <Footer />
     </>

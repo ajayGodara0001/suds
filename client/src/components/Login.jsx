@@ -1,7 +1,13 @@
 import { useForm } from "react-hook-form";
 import {  X, Menu } from "lucide-react";
 import { NavLink, useNavigate } from "react-router-dom";
+import axios from "axios"
+import { useState } from "react";
+import toast from 'react-hot-toast';
+
 export default function Login() {
+    const [loading, setLoading] = useState(false);
+  
   const navigate = useNavigate()
   const {
     register,
@@ -13,8 +19,30 @@ export default function Login() {
    const back = () =>{
         navigate("/")
    }
-  const onSubmit = (data) => {
-    console.log("Logging in with", data);
+   const onSubmit = async (data) => {
+    setLoading(true)
+    const user = {
+      email:data.email,
+      password:data.password
+    }         
+    const backend_url = import.meta.env.VITE_BACKEND_URI
+    await axios.post(`${backend_url}/api/auth/login`, user)
+      .then((res) => {
+        localStorage.setItem("sudsUser", JSON.stringify(res.data.user))
+        navigate("/")  
+        window.location.reload()
+       
+          toast.success(res.data.message); // Delay navigation by 2 seconds
+      
+       
+      })
+      .catch((error)=>{
+        console.error("Error:", error.response?.data || error.message);
+              toast.error(error.response?.data?.message ||  error.message);
+      })
+      .finally(() => {
+        setLoading(false); // Enable button again if needed
+      });
   };
 
   return (
@@ -44,9 +72,11 @@ export default function Login() {
           
           <button
             type="submit"
-            className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition"
+            className={`w-full text-white cursor-pointer py-2 rounded-lg transition ${loading ? "bg-gray-400 cursor-not-allowed" : "bg-green-500 hover:bg-green-600"
+              }`}
+            disabled={loading}
           >
-            Login
+            {loading ? "Loging..." : "Login"}
           </button>
         </form>
         <a href="#" className="text-blue-500 text-sm block mt-2">Forgot Password?</a>
