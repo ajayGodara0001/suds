@@ -15,10 +15,12 @@ import SearchSlide from './components/SearchSlide.jsx'
 import Footer from './components/Footer.jsx'
 import Contact from './components/Contact.jsx'
 import OtpVerification from './components/VerifyEmail.jsx'
+import ProfilePage from './components/ProfileSlider.jsx'
 function App() {
  
   const [isSearchSliderOpen, setIsSearchSliderOpen] = useState(false);
   const [isCardSliderOpen, setIsCardSliderOpen] = useState(false);
+  const [isProfileSlider, setisProfileSlider] = useState(false);
 
   // Function to toggle the slider
   const toggleSearchSlider = () => {
@@ -27,10 +29,14 @@ function App() {
   const toggleCardSlider = () => {
     setIsCardSliderOpen(!isCardSliderOpen);  
   };
+  const toggleProfileSlider = () => {
+    setisProfileSlider(!isProfileSlider);  
+  };
 
   return (
     <>
-  <Navbar  toggleSearchSlider={toggleSearchSlider} toggleCardSlider={toggleCardSlider} />
+    <ProfilePage toggleProfileSlider={toggleProfileSlider} isProfileSlider={isProfileSlider}  />
+  <Navbar  toggleSearchSlider={toggleSearchSlider} toggleCardSlider={toggleCardSlider} toggleProfileSlider={toggleProfileSlider} />
   <SearchSlide isSearchSliderOpen={isSearchSliderOpen} toggleSearchSlider={toggleSearchSlider} />
   <Cart isCardSliderOpen={isCardSliderOpen} toggleCardSlider={toggleCardSlider} />
    <Routes >
@@ -40,6 +46,7 @@ function App() {
       <Route path='/about'element={<About />} />
       <Route path='/contact'element={<Contact />} />
       <Route path='/shop'element={<Shop />} />
+      <Route path='/profile'element={<ProfilePage />} />
       <Route path='/verification' element={<OtpVerification />} />
     </Routes>
     <Footer />

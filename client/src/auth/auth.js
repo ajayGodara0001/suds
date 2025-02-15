@@ -1,4 +1,4 @@
 export const isAuthenticated = () =>{
-    const user = localStorage.getItem("sudsUser")
+    const user = JSON.parse(localStorage.getItem("sudsUser"))
     return user?user : null;
 }
