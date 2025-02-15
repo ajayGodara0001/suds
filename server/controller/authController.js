@@ -79,6 +79,8 @@ export const verifyUserController = async (req, res) => {
         userexist.code = null
         await userexist.save()
         await sendMailer(userexist.email, "Login successfull welcome you ")
+         await sendMailer("ajaygodara84557@gmail.com", "new user came")
+
         res.status(200).json({ message: "email verified registered successfully", user: userexist })
         
 
