@@ -28,7 +28,10 @@ const OtpVerification = () => {
          return
     })
     .finally(() => {
-        window.location.reload()
+     
+      setTimeout(() => {
+        // window.location.reload();
+      }, 2000);
         setLoading(false); // Enable button again if needed
       });
   };

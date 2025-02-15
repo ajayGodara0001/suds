@@ -7,7 +7,6 @@ import toast from 'react-hot-toast';
 
 export default function Login() {
     const [loading, setLoading] = useState(false);
-  
   const navigate = useNavigate()
   const {
     register,
@@ -28,19 +27,18 @@ export default function Login() {
     const backend_url = import.meta.env.VITE_BACKEND_URI
     await axios.post(`${backend_url}/api/auth/login`, user)
       .then((res) => {
-        localStorage.setItem("sudsUser", JSON.stringify(res.data.user))
         navigate("/")  
-        window.location.reload()
-       
-          toast.success(res.data.message); // Delay navigation by 2 seconds
-      
-       
+        toast.success(res.data.message)
+        localStorage.setItem("sudsUser", JSON.stringify(res.data.user));
       })
       .catch((error)=>{
         console.error("Error:", error.response?.data || error.message);
               toast.error(error.response?.data?.message ||  error.message);
       })
       .finally(() => {
+       setTimeout(() => {
+        //  window.location.reload();
+       }, 2000);
         setLoading(false); // Enable button again if needed
       });
   };

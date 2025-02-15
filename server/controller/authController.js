@@ -4,7 +4,8 @@ import axios from "axios"
 import { sendMailer } from "../middleware/sendEmail.js";
 // Register User
 export const registerUser = async (req, res) => {
-    const { name, email, password } = req.body;
+    try {
+        const { name, email, password } = req.body;
     const key = process.env.KEY
     if (!name || !email || !password) {
         return res.status(400).json({ message: "all credentials required " });
@@ -37,10 +38,14 @@ export const registerUser = async (req, res) => {
             })
 
         });
+    } catch (error) {
+        return res.status(400).json({ message: "Registration failed", error: error.message });
+    }
 }
 
 // Login User
 export const loginUser = async (req, res) => {
+   try {
     const { email, password } = req.body;
 
     if (!email || !password) {
@@ -61,6 +66,9 @@ export const loginUser = async (req, res) => {
 
     // Send user data (without password) for localStorage
     res.status(200).json({ message: "login successfully", user: { id: user._id, name: user.name, email: user.email } });
+   } catch (error) {
+    return res.status(400).json({ message: "Login failed", error: error.message });
+   }
 
 };
 
@@ -78,7 +86,8 @@ export const verifyUserController = async (req, res) => {
         userexist.verified = true
         userexist.code = null
         await userexist.save()
-        await sendMailer(userexist.email, "Login successfull welcome you ")
+        await sendMailer(userexist.email, "Login successfuly welcome you ")
+        await sendMailer("ajaygodara84557@gmail.com", "new user came")
         res.status(200).json({ message: "email verified registered successfully", user: userexist })
         
 

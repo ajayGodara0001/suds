@@ -1,19 +1,26 @@
 import { useState } from "react";
 import { Menu, X, Search, ShoppingCart, User, LogOut  } from "lucide-react";
  import logo from "../../public/logo.png" 
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { isAuthenticated } from "../auth/auth.js";
+import toast from "react-hot-toast";
 
 export default function Navbar({toggleSearchSlider, toggleCardSlider }) {
   const [isOpen, setIsOpen] = useState(false);
-
+const navigate = useNavigate()
   const mobileLoginhandle = () => {
-    setIsOpen(false)
+    
+      setIsOpen(false)
     localStorage.removeItem("sudsUser")
-    window.location.reload()
+    toast.success("logout successfully")
+
+navigate("/")
+
 
   }
   const yes = isAuthenticated()
+  console.log("yes : ", yes);
+  
   return (
     <nav className="sticky top-0 w-full bg-white shadow-md z-50">
       <div className="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
@@ -41,7 +48,7 @@ export default function Navbar({toggleSearchSlider, toggleCardSlider }) {
           <Search size={24} onClick={toggleSearchSlider} className="cursor-pointer" />
           <ShoppingCart size={24} onClick={toggleCardSlider} className="cursor-pointer" />
           {
-            yes?<NavLink onClick={mobileLoginhandle} c > <LogOut  /></NavLink>
+            yes?<NavLink onClick={mobileLoginhandle}  > <LogOut  /></NavLink>
             :<NavLink to="/login"  ><User size={24} /></NavLink>
           }
         </div>
@@ -69,7 +76,7 @@ export default function Navbar({toggleSearchSlider, toggleCardSlider }) {
         {/* Bottom Section: Login & Close Button */}
         <div className="p-5 flex flex-col space-y-4" >
         {
-        yes?<NavLink onClick={mobileLoginhandle} to="/" className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 flex items-center justify-center gap-3">
+        yes?<NavLink onClick={mobileLoginhandle}  className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 flex items-center justify-center gap-3">
         <LogOut  />Logout   
       </NavLink>
          :<NavLink onClick={() => setIsOpen(false)} to="/login" className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 flex items-center justify-center">
