@@ -5,7 +5,7 @@ app.use(express.json());
 
 import cors from "cors";
 app.use(cors({
-  origin: "https://suds.vercel.app", // Allow frontend
+  origin: "http://localhost:5173", // Allow frontend
   credentials: true // Allow cookies
 }));
 import cookieParser from "cookie-parser";
