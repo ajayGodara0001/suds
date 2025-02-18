@@ -16,10 +16,10 @@ const OtpVerification = () => {
     }
     const backend_url = import.meta.env.VITE_BACKEND_URI
 
-    await axios.post(`${backend_url}/api/auth/verify`, {verificationCode})
+    await axios.post(`${backend_url}/api/auth/verify-email`, {verificationCode},{ withCredentials: true })
     .then((res) => {
        toast.success(res.data.message);
-       localStorage.setItem("sudsUser", JSON.stringify(res.data.user))
+       window.location.reload()
        navigate("/")    
     })
     .catch((error)=>{
@@ -29,9 +29,8 @@ const OtpVerification = () => {
     })
     .finally(() => {
      
-      setTimeout(() => {
-        // window.location.reload();
-      }, 2000);
+        window.location.reload();
+   
         setLoading(false); // Enable button again if needed
       });
   };

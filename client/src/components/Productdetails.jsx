@@ -1,8 +1,12 @@
 // ProductDetails.js
 import React from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const ProductDetails = () => {
+const navigate = useNavigate()
+  const buyhandle = () => {
+    navigate("/Buy")
+  }
   const location = useLocation();
   const { image, title, description } = location.state || {};
 
@@ -30,10 +34,10 @@ const ProductDetails = () => {
               defaultValue="1"
               className="w-20 p-2 border rounded-lg"
             />
-            <button className="bg-blue-500 text-white px-6 py-2 rounded-lg">
+            <button className="bg-blue-500 cursor-pointer text-white px-6 py-2 rounded-lg">
               Add to Cart
             </button>
-            <button className="bg-green-500 text-white px-6 py-2 rounded-lg">
+            <button  onClick={buyhandle} className="bg-green-500 text-white cursor-pointer px-6 py-2 rounded-lg">
               Buy Now
             </button>
           </div>

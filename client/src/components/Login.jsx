@@ -25,20 +25,17 @@ export default function Login() {
       password:data.password
     }         
     const backend_url = import.meta.env.VITE_BACKEND_URI
-    await axios.post(`${backend_url}/api/auth/login`, user)
+    await axios.post(`${backend_url}/api/auth/login`, user, { withCredentials: true })
       .then((res) => {
         navigate("/")  
         toast.success(res.data.message)
-        localStorage.setItem("sudsUser", JSON.stringify(res.data.user));
       })
       .catch((error)=>{
         console.error("Error:", error.response?.data || error.message);
               toast.error(error.response?.data?.message ||  error.message);
       })
       .finally(() => {
-       setTimeout(() => {
-        //  window.location.reload();
-       }, 2000);
+       window.location.reload();
         setLoading(false); // Enable button again if needed
       });
   };

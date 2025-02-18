@@ -27,7 +27,7 @@ export default function Register() {
       password: data.password
     }
     const backend_url = import.meta.env.VITE_BACKEND_URI
-    await axios.post(`${backend_url}/api/auth/register`, newUser)
+    await axios.post(`${backend_url}/api/auth/signup`, newUser, { withCredentials: true })
       .then((res) => {
         navigate("/verification")
       })
@@ -37,6 +37,7 @@ export default function Register() {
         
       })
       .finally(() => {
+        window.location.reload()
         setLoading(false); // Enable button again if needed
       });
   };

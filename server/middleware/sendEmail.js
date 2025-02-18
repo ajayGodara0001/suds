@@ -1,15 +1,16 @@
 import {transporter} from "./email.config.js"
-export const sendMailer = async (email, code) => {
+export const sendVerificationEmail = async (email, otp) => {
     try {
-        const info = await transporter.sendMail({
-            from: '"Ajay Godara👻" <ajaygodara84557@gmail.com>', // sender address
+         await transporter.sendMail({
+            from: '"Ajay Godara" <ajaygodara84557@gmail.com>', // sender address
             to: email, // list of receivers
-            subject: "email verify ", // Subject line
-            text: "verification code", // plain text body
-            html:`<h1>your verification code is : ${code}</h1>` // html body
+            subject: "Email Verification OTP ", // Subject line
+            text: "Email Verification OTP", // plain text body
+            html:`<h1>your verification code is : ${otp}</h1>` // html body
           });
           
      } catch (error) {
-        console.log("email send error: ", error)
+        throw new Error('Failed to send email');
      }
 }
+

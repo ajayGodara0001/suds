@@ -2,17 +2,15 @@ import { useState } from "react";
 import { Menu, X, Search, ShoppingCart, User, LogOut } from "lucide-react";
 import logo from "../../public/logo.png"
 import { NavLink, useNavigate } from "react-router-dom";
-import { isAuthenticated } from "../auth/auth.js";
 
 
-export default function Navbar({ toggleSearchSlider, toggleCardSlider, toggleProfileSlider }) {
+export default function Navbar({ toggleSearchSlider, toggleCardSlider, toggleProfileSlider, isAuthenticated}) {
   const [isOpen, setIsOpen] = useState(false);
-  const yes = isAuthenticated()
 
   const navigate = useNavigate();
 
   const handleClick = () => {
-    if (yes != null) {
+    if (isAuthenticated) {
       toggleProfileSlider(); // Call the parent function
     } else {
       navigate('/login'); // Navigate to /login

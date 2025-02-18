@@ -1,18 +1,21 @@
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { isAuthenticated } from "../auth/auth";
+import axios from "axios";
 
 const ProfilePage = ({ isProfileSlider, toggleProfileSlider }) => {
     const navigate = useNavigate();
 
     const handleLogout = () => {
-        localStorage.removeItem("sudsUser");
+        axios.post("http://localhost:4000/api/auth/logout", {}, { withCredentials: true })   
+        .then((res) => toast.success(res.data.message))
+        .catch(err => console.error(err));
         toggleProfileSlider()
         navigate("/");
-        toast.success("Logout successfully")
+        window.location.reload()
     };
 
-    const user = isAuthenticated()
+    // const user = isAuthenticated()
 
     return (
 
@@ -22,8 +25,8 @@ const ProfilePage = ({ isProfileSlider, toggleProfileSlider }) => {
                 <h2 className="text-2xl font-semibold ">Profile</h2>
                 <button onClick={toggleProfileSlider} className="hover:scale-125 text-gray-600">✖</button>
             </div>
-            <p className="p-2  rounded"><strong>Name:</strong> {user?.name || "Guest"}</p>
-            <p className="p-2 rounded"><strong>Email:</strong> {user?.email || "Not Provided"}</p>
+            {/* <p className="p-2  rounded"><strong>Name:</strong> {user?.name || "Guest"}</p>
+            <p className="p-2 rounded"><strong>Email:</strong> {user?.email || "Not Provided"}</p> */}
             
            </div>
            <div>

@@ -1,7 +1,7 @@
 
 import './App.css'
 import {  Route, Routes } from   "react-router-dom"
-
+import axios from 'axios'
 import Login from './components/Login.jsx'
 import Register from './components/Signup.jsx'
 import Home from './Home/Home.jsx'
@@ -19,8 +19,25 @@ import ProfilePage from './components/ProfileSlider.jsx'
 import ProductDetails from './components/Productdetails.jsx'
 import ContactUs from './components/Contact.jsx'
 import AboutUs from './components/About.jsx'
+import BuyPage from './components/Buy.jsx'
+
+import { useEffect } from 'react'
 function App() {
  
+
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  useEffect(() => {
+    axios.get("http://localhost:4000/api/auth/check", { withCredentials: true }) 
+      .then((response) => {
+        setIsAuthenticated(response.data.isAuthenticated);
+      })
+      .catch(() => {  
+        setIsAuthenticated(false);
+      });
+  }, []);
+
+
   const [isSearchSliderOpen, setIsSearchSliderOpen] = useState(false);
   const [isCardSliderOpen, setIsCardSliderOpen] = useState(false);
   const [isProfileSlider, setisProfileSlider] = useState(false);
@@ -39,7 +56,7 @@ function App() {
   return (
     <>
     <ProfilePage toggleProfileSlider={toggleProfileSlider} isProfileSlider={isProfileSlider}  />
-  <Navbar  toggleSearchSlider={toggleSearchSlider} toggleCardSlider={toggleCardSlider} toggleProfileSlider={toggleProfileSlider} />
+  <Navbar  toggleSearchSlider={toggleSearchSlider} toggleCardSlider={toggleCardSlider} toggleProfileSlider={toggleProfileSlider} isAuthenticated={isAuthenticated} />
   <SearchSlide isSearchSliderOpen={isSearchSliderOpen} toggleSearchSlider={toggleSearchSlider} />
   <Cart isCardSliderOpen={isCardSliderOpen} toggleCardSlider={toggleCardSlider} />
    <Routes >
@@ -51,6 +68,7 @@ function App() {
       <Route path='/contact'element={<ContactUs />} />
       <Route path='/shop'element={<ColorGrid />} />
       <Route path='/profile'element={<ProfilePage />} />
+      <Route path='/Buy'element={<BuyPage />} />
       <Route path='/verification' element={<OtpVerification />} />
     </Routes>
     <Footer />

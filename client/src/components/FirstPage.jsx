@@ -4,7 +4,12 @@ import second from "../../public/second.png"
 import third from "../../public/third1.png"
 import fourth from "../../public/fourth.png"
 import BlixLibrary from './library.jsx'
+import { useNavigate } from 'react-router-dom'
 function FirstPage() {
+  const navigate = useNavigate()
+  const launchclick  = () => {
+  navigate("/")
+  }
   return (
     <>
       <div className='border-2 overflow-hidden px-2 py-5 flex flex-col gap-10 justify-center items-center'>
@@ -51,7 +56,7 @@ function FirstPage() {
 
           {/* Image Section */}
           <div className="w-full h-[60%] md:w-[50%] md:h-[60%] flex justify-center items-center mt-4">
-            <img className="w-full h-full object-contain" src={third} alt="third_img" />
+            <img  onClick={launchclick} className="hover:scale-125 w-full h-full object-contain" src={third} alt="third_img" />
           </div>
 
           {/* Product Info */}
