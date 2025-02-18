@@ -30,10 +30,10 @@ export default function Register() {
     await axios.post(`${backend_url}/api/auth/signup`, newUser, { withCredentials: true })
       .then((res) => {
         navigate("/verification")
-      })
+        })
       .catch((error) => {
         console.error("Error:", error.response?.data || error.message);
-              toast.error(error.response?.data?.message ||  error.message);
+            toast.error(error.response?.data?.message ||  error.message);
         
       })
       .finally(() => {

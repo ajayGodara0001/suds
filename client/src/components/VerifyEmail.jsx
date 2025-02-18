@@ -19,8 +19,10 @@ const OtpVerification = () => {
     await axios.post(`${backend_url}/api/auth/verify-email`, {verificationCode},{ withCredentials: true })
     .then((res) => {
        toast.success(res.data.message);
-       window.location.reload()
-       navigate("/")    
+       navigate("/");
+       setTimeout(() => {
+        window.location.reload(); // Reload after 1.5 seconds
+    }, 1000);   
     })
     .catch((error)=>{
       console.error("Error:", error.response?.data || error.message);
@@ -28,9 +30,6 @@ const OtpVerification = () => {
          return
     })
     .finally(() => {
-     
-        window.location.reload();
-   
         setLoading(false); // Enable button again if needed
       });
   };

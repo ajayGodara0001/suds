@@ -27,15 +27,17 @@ export default function Login() {
     const backend_url = import.meta.env.VITE_BACKEND_URI
     await axios.post(`${backend_url}/api/auth/login`, user, { withCredentials: true })
       .then((res) => {
-        navigate("/")  
         toast.success(res.data.message)
+        navigate("/")
       })
       .catch((error)=>{
         console.error("Error:", error.response?.data || error.message);
-              toast.error(error.response?.data?.message ||  error.message);
+        toast.error(error.response?.data?.message ||  error.message);
       })
       .finally(() => {
-       window.location.reload();
+        setTimeout(() => {
+          window.location.reload();
+      }, 500);
         setLoading(false); // Enable button again if needed
       });
   };

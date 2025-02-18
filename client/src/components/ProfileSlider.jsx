@@ -11,9 +11,11 @@ const ProfilePage = ({ isProfileSlider, toggleProfileSlider }) => {
          await  axios.post(`${backend_url}/api/auth/logout`, {}, { withCredentials: true })   
         .then((res) => toast.success(res.data.message))
         .catch(err => console.error(err));
-        toggleProfileSlider()
-        navigate("/");
-        window.location.reload()
+        toggleProfileSlider();
+        setTimeout(() => {
+            navigate("/");
+            window.location.reload(); // Reload after 1.5 seconds
+        }, 500);
     };
 
     // const user = isAuthenticated()
