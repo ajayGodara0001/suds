@@ -1,5 +1,5 @@
 import React from 'react'
-import FirstPage from '../components/FirstPage.jsx'
+import FirstPage from '../FirstPage.jsx'
 function Home() {
 
 

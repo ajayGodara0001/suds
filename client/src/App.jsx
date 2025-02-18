@@ -4,7 +4,7 @@ import {  Route, Routes } from   "react-router-dom"
 import axios from 'axios'
 import Login from './components/Login.jsx'
 import Register from './components/Signup.jsx'
-import Home from './Home/Home.jsx'
+import Home from './components/Home/Home.jsx'
 import About from './components/About.jsx'
 import ColorGrid from "./components/Shop.jsx"
 import Navbar from './components/Navbar.jsx'

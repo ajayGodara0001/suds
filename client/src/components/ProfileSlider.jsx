@@ -7,7 +7,8 @@ const ProfilePage = ({ isProfileSlider, toggleProfileSlider }) => {
     const navigate = useNavigate();
 
     const handleLogout = () => {
-        axios.post("http://localhost:4000/api/auth/logout", {}, { withCredentials: true })   
+        const backend_url = import.meta.env.VITE_BACKEND_URI
+        axios.post(`${backend_url}/api/auth/logout`, {}, { withCredentials: true })   
         .then((res) => toast.success(res.data.message))
         .catch(err => console.error(err));
         toggleProfileSlider()
