@@ -6,9 +6,9 @@ import axios from "axios";
 const ProfilePage = ({ isProfileSlider, toggleProfileSlider }) => {
     const navigate = useNavigate();
 
-    const handleLogout = () => {
+    const handleLogout = async () => {
         const backend_url = import.meta.env.VITE_BACKEND_URI
-        axios.post(`${backend_url}/api/auth/logout`, {}, { withCredentials: true })   
+         await  axios.post(`${backend_url}/api/auth/logout`, {}, { withCredentials: true })   
         .then((res) => toast.success(res.data.message))
         .catch(err => console.error(err));
         toggleProfileSlider()
