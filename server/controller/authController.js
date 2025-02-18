@@ -39,9 +39,10 @@ export const signUp = async (req, res) => {
   
       // Set token as HttpOnly cookie (for security reasons)
       res.cookie('token', token, {
-        httpOnly: true,
-        secure: true,
-        maxAge:  60 * 60 * 1000,  // 1 h expiration
+        httpOnly: true,  // Cookie cannot be accessed via JavaScript (more secure)
+        secure: true,    // Only send the cookie over HTTPS (required for production)
+        sameSite: "None", // Required for cross-origin cookies (Vercel & Render)
+        maxAge: 60 * 60 * 1000, // 1-hour expiration
       });
   
       res.status(201).json({ message: 'User registered. Please check your email for OTP' });
@@ -76,9 +77,10 @@ export const login = async (req, res) => {
   
       // Set token as HttpOnly cookie (for security reasons)
       res.cookie('token', token, {
-        httpOnly: true,
-        secure: true,
-      maxAge:  60 * 60 * 1000,  // 1 h expiration
+        httpOnly: true,  // Cookie cannot be accessed via JavaScript (more secure)
+        secure: true,    // Only send the cookie over HTTPS (required for production)
+        sameSite: "None", // Required for cross-origin cookies (Vercel & Render)
+        maxAge: 60 * 60 * 1000, // 1-hour expiration
       });
   
       res.status(200).json({ message: 'Login successful' });
