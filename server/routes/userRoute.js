@@ -19,9 +19,10 @@ router.post('/login', validateLogin, login);
 router.post("/logout", (req, res) => {
   res.clearCookie("token", {
     httpOnly: true,
-    secure: true, // Change to false if testing locally
-    sameSite: "Strict",
+    secure: true,  // ✅ Required for HTTPS (set to false for localhost)
+    sameSite: "None", // ✅ Required for cross-origin requests
   });
+
   res.status(200).json({ message: "Logged out successfully" });
 });
 
