@@ -2,10 +2,13 @@ import express from "express"
 const app = express()
 app.use(express.json());
 
-
+import dotenv from "dotenv";
+dotenv.config();
+ 
+const client_uri= process.env.client_uri
 import cors from "cors";
 app.use(cors({
-  origin: "http://localhost:5173", // Allow frontend
+  origin: `${client_uri}`, // Allow frontend
   credentials: true // Allow cookies
 }));
 import cookieParser from "cookie-parser";
@@ -15,8 +18,7 @@ app.use(cookieParser());
 import connectDB from "./config/db.js";
 connectDB();
 
-import dotenv from "dotenv";
-dotenv.config();
+
 
 
 import authRoutes from "./routes/userRoute.js";
