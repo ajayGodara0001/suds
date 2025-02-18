@@ -28,7 +28,8 @@ function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
-    axios.get("http://localhost:4000/api/auth/check", { withCredentials: true }) 
+    const backend_url = import.meta.env.VITE_BACKEND_URI
+    axios.get(`${backend_url}/api/auth/check`, { withCredentials: true }) 
       .then((response) => {
         setIsAuthenticated(response.data.isAuthenticated);
       })
