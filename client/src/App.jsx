@@ -1,5 +1,6 @@
 
 import './App.css'
+import "./index.css";
 import {  Route, Routes } from   "react-router-dom"
 import axios from 'axios'
 import Login from './components/Login.jsx'

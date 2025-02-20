@@ -29,7 +29,10 @@ export const BuyNow = () => {
         }, { withCredentials: true })
             .then((res) => {
                 navigate("/")
-                toast.success(res.data.message)
+                toast.success(res.data.message, {
+                    position: "top-center",
+                    style: { marginTop: "50px" }, // Moves it slightly lower from the top
+                  })
             })
             .catch((error) => {
                 console.error("Error:", error.response?.data || error.message);
