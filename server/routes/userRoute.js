@@ -1,7 +1,7 @@
 import express from "express";
 import { validateLogin, validateSignUp } from "../middleware/validateRequest.js";
 import { login, signUp, verifyEmail } from "../controller/authController.js";
-import jwt from "jsonwebtoken"
+import jwt, { decode } from "jsonwebtoken"
 const router = express.Router();
 
 
@@ -32,7 +32,7 @@ router.get('/check', (req, res) => {
   const token = req.cookies.token;
 
   if (!token) {
-    return res.status(200).json({ isAuthenticated: false, user: null });
+    return res.status(200).json({ isAuthenticated: false, user: null});
   }
 
   try {
@@ -40,6 +40,8 @@ router.get('/check', (req, res) => {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
     req.user = decoded;  // Attach user info to the request object
+  
+    
     res.status(200).json({ isAuthenticated: true, user: decoded });
   } catch (error) {
     res.status(400).json({ message: 'Invalid token' });

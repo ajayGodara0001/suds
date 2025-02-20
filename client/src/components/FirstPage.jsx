@@ -1,23 +1,24 @@
 import React from 'react'
-import first from "../../public/first.png"
 import second from "../../public/second.png"
 import third from "../../public/third1.png"
 import fourth from "../../public/fourth.png"
+import ProductCart from './shop/shopproduct.jsx'
+
+import { products } from '../product.js'
 import BlixLibrary from './library.jsx'
 import { useNavigate } from 'react-router-dom'
 function FirstPage() {
   const navigate = useNavigate()
-  const launchclick  = () => {
-  navigate("/")
-  }
+
+  const first = "https://res.cloudinary.com/db7tda7yp/image/upload/v1739881713/picofkit_hptha8.png"
   return (
     <>
       <div className='border-2 overflow-hidden px-2 py-5 flex flex-col gap-10 justify-center items-center'>
 
 
-        <div className='w-screen bg-amber-500 lg:h-[70vh] md:h-[80vh] h-[60vh]'>
+        <div className="w-screen lg:h-[70vh] md:h-[80vh] h-[60vh]">
           <img
-            className='w-[100%] h-full  '
+            className="w-full h-full object-contain"
             src={first}
             alt="first_Img"
           />
@@ -47,25 +48,15 @@ function FirstPage() {
           </div>
         </div>
 
-        <div className="flex flex-col items-center justify-center text-center  w-full h-[80vh] md:h-[60vh] p-4">
-          {/* Text Section */}
-          <div>
-            <h1 className="text-3xl font-bold">New Launch</h1>
-            <p className="text-lg text-gray-600">Check out our new launch!!</p>
-          </div>
 
-          {/* Image Section */}
-          <div className="w-full h-[60%] md:w-[50%] md:h-[60%] flex justify-center items-center mt-4">
-            <img  onClick={launchclick} className="hover:scale-125 w-full h-full object-contain" src={third} alt="third_img" />
-          </div>
-
-          {/* Product Info */}
-          <div>
-            <h3 className="font-bold">BLIX MARBLE RUN 2</h3>
-            <p className="text-lg text-gray-600">Rs. 1,999.00</p>
+        <div>
+          <h1 className='text-3xl my-5'>List Products</h1>
+          <div className='grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 gap-5'>
+            {products.map((product, key) =>
+              <ProductCart key={key} data={product} />
+            )}
           </div>
         </div>
-
 
 
         <div className="flex flex-col md:flex-row w-full h-fit items-center p-4">
@@ -90,8 +81,8 @@ function FirstPage() {
         </div>
 
 
-       
-<BlixLibrary />
+
+        <BlixLibrary />
 
       </div>
     </>

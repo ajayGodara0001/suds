@@ -1,9 +1,8 @@
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
-import { isAuthenticated } from "../auth/auth";
 import axios from "axios";
 
-const ProfilePage = ({ isProfileSlider, toggleProfileSlider }) => {
+const ProfilePage = ({ user, isProfileSlider, toggleProfileSlider }) => {
     const navigate = useNavigate();
 
     const handleLogout = async () => {
@@ -17,8 +16,7 @@ const ProfilePage = ({ isProfileSlider, toggleProfileSlider }) => {
             window.location.reload(); // Reload after 1.5 seconds
         }, 500);
     };
-
-    // const user = isAuthenticated()
+   
 
     return (
 
@@ -28,8 +26,8 @@ const ProfilePage = ({ isProfileSlider, toggleProfileSlider }) => {
                 <h2 className="text-2xl font-semibold ">Profile</h2>
                 <button onClick={toggleProfileSlider} className="hover:scale-125 text-gray-600">✖</button>
             </div>
-            {/* <p className="p-2  rounded"><strong>Name:</strong> {user?.name || "Guest"}</p>
-            <p className="p-2 rounded"><strong>Email:</strong> {user?.email || "Not Provided"}</p> */}
+            <p className="p-2  rounded"><strong>Name:</strong> {user?.name || "Guest"}</p>
+            <p className="p-2 rounded"><strong>Email:</strong> {user?.email || "Not Provided"}</p>
             
            </div>
            <div>
@@ -45,6 +43,11 @@ const ProfilePage = ({ isProfileSlider, toggleProfileSlider }) => {
             >
                 Go to Shop
             </button>
+           <NavLink to="/myorders"> <button  onClick={() => {toggleProfileSlider()}}
+                className="mt-2 w-full px-4 py-2 cursor-pointer bg-green-500 text-white rounded-lg hover:bg-green-600"
+            >
+                My Orders 
+            </button></NavLink>
            </div>
         </div>
     )

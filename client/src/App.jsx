@@ -5,32 +5,33 @@ import axios from 'axios'
 import Login from './components/Login.jsx'
 import Register from './components/Signup.jsx'
 import Home from './components/Home/Home.jsx'
-import About from './components/About.jsx'
-import ColorGrid from "./components/Shop.jsx"
 import Navbar from './components/Navbar.jsx'
-import Cart from './components/Cart.jsx'
 
 import { useState } from 'react'
 import SearchSlide from './components/SearchSlide.jsx'
 import Footer from './components/Footer.jsx'
-import Contact from './components/Contact.jsx'
 import OtpVerification from './components/VerifyEmail.jsx'
 import ProfilePage from './components/ProfileSlider.jsx'
-import ProductDetails from './components/Productdetails.jsx'
 import ContactUs from './components/Contact.jsx'
 import AboutUs from './components/About.jsx'
-import BuyPage from './components/Buy.jsx'
+import Detail from './components/shop/detail.jsx'
 
 import { useEffect } from 'react'
+import Shop from './components/shop/shop.jsx'
+import CartTab from './components/cart/cartTab.jsx'
+import { BuyNow } from './components/BuyNow.jsx'
+import UserOrders from './components/Myorders.jsx'
+
 function App() {
  
 
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-
+  const [user, setUser] = useState({})
   useEffect(() => {
     const backend_url = import.meta.env.VITE_BACKEND_URI
     axios.get(`${backend_url}/api/auth/check`, { withCredentials: true }) 
-      .then((response) => {
+      .then((response) => { 
+      setUser(response.data.user)
         setIsAuthenticated(response.data.isAuthenticated);
       })
       .catch(() => {  
@@ -40,15 +41,15 @@ function App() {
 
 
   const [isSearchSliderOpen, setIsSearchSliderOpen] = useState(false);
-  const [isCardSliderOpen, setIsCardSliderOpen] = useState(false);
+  const [isCartSliderOpen, setIsCartSliderOpen] = useState(false);
   const [isProfileSlider, setisProfileSlider] = useState(false);
 
   // Function to toggle the slider
   const toggleSearchSlider = () => {
     setIsSearchSliderOpen(!isSearchSliderOpen);  
   };
-  const toggleCardSlider = () => {
-    setIsCardSliderOpen(!isCardSliderOpen);  
+  const toggleCartSlider = () => {
+    setIsCartSliderOpen(!isCartSliderOpen);  
   };
   const toggleProfileSlider = () => {
     setisProfileSlider(!isProfileSlider);  
@@ -56,21 +57,22 @@ function App() {
 
   return (
     <>
-    <ProfilePage toggleProfileSlider={toggleProfileSlider} isProfileSlider={isProfileSlider}  />
-  <Navbar  toggleSearchSlider={toggleSearchSlider} toggleCardSlider={toggleCardSlider} toggleProfileSlider={toggleProfileSlider} isAuthenticated={isAuthenticated} />
+    <ProfilePage user={user} toggleProfileSlider={toggleProfileSlider} isProfileSlider={isProfileSlider}  />
+  <Navbar  toggleSearchSlider={toggleSearchSlider} toggleCartSlider={toggleCartSlider} toggleProfileSlider={toggleProfileSlider} isAuthenticated={isAuthenticated} />
   <SearchSlide isSearchSliderOpen={isSearchSliderOpen} toggleSearchSlider={toggleSearchSlider} />
-  <Cart isCardSliderOpen={isCardSliderOpen} toggleCardSlider={toggleCardSlider} />
+  <CartTab isCartSliderOpen={isCartSliderOpen} toggleCartSlider={toggleCartSlider} />
    <Routes >
       <Route path='/'element={<Home />} />
-      <Route path="/product/:id" element={<ProductDetails />} />
       <Route path='/login'element={<Login />} />
       <Route path='/register'element={<Register />} />
       <Route path='/about'element={<AboutUs />} />
       <Route path='/contact'element={<ContactUs />} />
-      <Route path='/shop'element={<ColorGrid />} />
+      <Route path='/shop'element={<Shop />} />
       <Route path='/profile'element={<ProfilePage />} />
-      <Route path='/Buy'element={<BuyPage />} />
       <Route path='/verification' element={<OtpVerification />} />
+      <Route path='/shop/:slug' element={<Detail />} />
+      <Route path='/buynow' element={<BuyNow />} />
+      <Route path='/myorders' element={<UserOrders />} />
     </Routes>
     <Footer />
     </>

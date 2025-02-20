@@ -22,7 +22,9 @@ connectDB();
 
 
 import authRoutes from "./routes/userRoute.js";
+import orderRoutes from "./routes/orderRoute.js"
 app.use("/api/auth", authRoutes);
+app.use("/api/shop", orderRoutes);
 
 
 

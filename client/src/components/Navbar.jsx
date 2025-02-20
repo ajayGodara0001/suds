@@ -4,8 +4,24 @@ import logo from "../../public/logo.png"
 import { NavLink, useNavigate } from "react-router-dom";
 
 
-export default function Navbar({ toggleSearchSlider, toggleCardSlider, toggleProfileSlider, isAuthenticated}) {
+import React, {  useEffect} from 'react' 
+import { useSelector, useDispatch } from 'react-redux' 
+
+export default function Navbar({ toggleSearchSlider, toggleCartSlider, toggleProfileSlider, isAuthenticated}) {
   const [isOpen, setIsOpen] = useState(false);
+
+  const [totalQuantity, setTotalQuantity] = useState(0);
+  const carts = useSelector(store => store.cart.items);
+  const dispatch = useDispatch();
+  useEffect(() => {
+      let total = 0;
+      carts.forEach(item => total += item.quantity);
+      setTotalQuantity(total);
+  }, [carts])
+  const handleOpenTabCart = () => {
+    toggleCartSlider()
+  }
+
 
   const navigate = useNavigate();
 
@@ -41,7 +57,17 @@ export default function Navbar({ toggleSearchSlider, toggleCardSlider, togglePro
         {/* Right Side: Search, Cart, Login Icons */}
         <div className="flex items-center space-x-4 text-gray-700">
           <Search size={24} onClick={toggleSearchSlider} className="cursor-pointer" />
-          <ShoppingCart size={24} onClick={toggleCardSlider} className="cursor-pointer" />
+          {/* <ShoppingCart size={24} onClick={toggleCardSlider} className="cursor-pointer" /> */}
+
+
+          <div className='w-10 h-10 bg-gray-100 rounded-full
+        flex justify-center items-center relative' onClick={handleOpenTabCart}>
+            <ShoppingCart onClick={handleOpenTabCart} className="cursor-pointer w-6" />
+            {/* <img src={iconCart} alt="" className='w-6'/> */}
+            <span className='absolute top-2/3 right-1/2 bg-red-500 text-white text-sm
+            w-5 h-5 rounded-full flex justify-center items-center'>{totalQuantity}</span>
+        </div>
+
 
           <div  className="cursor-pointer" onClick={handleClick}>
             <User size={24} />

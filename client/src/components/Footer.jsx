@@ -1,5 +1,6 @@
 import { FaTwitter, FaInstagram, FaLinkedin, FaFacebook } from "react-icons/fa";
-
+import { NavLink } from "react-router-dom";
+import logo from "../../public/logo.png"
 const Footer = () => {
     return (
         <footer className="bg-black text-white py-10 px-5">
@@ -10,7 +11,9 @@ const Footer = () => {
                     {/* Section 1: Logo & Social Media */}
 
                     <div className="flex flex-col gap-5 items-center">
-                        <h2 className="text-2xl font-bold">Company Logo</h2>
+                        <h2 className="text-2xl font-bold">
+                             <NavLink to="/"> <img src={logo}  alt="Logo" className="w-auto h-10 " /></NavLink>
+                        </h2>
                         <div className="flex gap-4  justify-center ">
                             <FaTwitter className="text-xl cursor-pointer" />
                             <FaInstagram className="text-xl cursor-pointer" />
