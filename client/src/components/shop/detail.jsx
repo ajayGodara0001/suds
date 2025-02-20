@@ -1,10 +1,11 @@
 import React, { useEffect, useState} from 'react' 
-import { useParams } from 'react-router-dom' 
+import { useNavigate, useParams } from 'react-router-dom' 
 import { products } from '../../product.js';
 import { useDispatch } from 'react-redux';
 import { addToCart } from '../../store/cart.js';
 
 const Detail = () => {
+    const navigate = useNavigate()
     const { slug } = useParams();
     const [detail, setDetail] = useState([]);
     const [quantity, setQuantity] = useState(1);
@@ -17,6 +18,11 @@ const Detail = () => {
             window.location.href = '/';
         }
     }, [slug])
+    const handleBuyNow = () =>{
+        const productName = detail.name
+        const price = detail.price
+        navigate("/buynow", { state: { productName, price } });
+    }
     const handleMinusQuantity = () => {
         setQuantity(quantity - 1 < 1 ? 1 : quantity - 1);
     }
@@ -49,6 +55,9 @@ const Detail = () => {
                     </div>
                     <button className='bg-slate-900 text-white px-7 py-3 rounded-xl shadow-2xl' onClick={handleAddToCart}>
                         Add To Cart
+                    </button>
+                    <button className='bg-slate-900 text-white px-7 py-3 rounded-xl shadow-2xl' onClick={handleBuyNow}>
+                       Buy now
                     </button>
                 </div>
                 <p>

@@ -1,6 +1,5 @@
 import React from 'react'
 import second from "../../public/second.png"
-import third from "../../public/third1.png"
 import fourth from "../../public/fourth.png"
 import ProductCart from './shop/shopproduct.jsx'
 

@@ -63,6 +63,7 @@ function App() {
   <CartTab isCartSliderOpen={isCartSliderOpen} toggleCartSlider={toggleCartSlider} />
    <Routes >
       <Route path='/'element={<Home />} />
+      <Route path='/:slug'element={<Detail />} />
       <Route path='/login'element={<Login />} />
       <Route path='/register'element={<Register />} />
       <Route path='/about'element={<AboutUs />} />
