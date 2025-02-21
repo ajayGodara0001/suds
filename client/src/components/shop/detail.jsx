@@ -21,7 +21,8 @@ const Detail = () => {
     const handleBuyNow = () =>{
         const productName = detail.name
         const price = detail.price
-        navigate("/buynow", { state: { productName, price } });
+        const prequantity = quantity
+        navigate("/buynow", { state: { productName, price , prequantity} });
     }
     const handleMinusQuantity = () => {
         setQuantity(quantity - 1 < 1 ? 1 : quantity - 1);

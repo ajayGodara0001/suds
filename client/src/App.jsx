@@ -22,6 +22,7 @@ import Shop from './components/shop/shop.jsx'
 import CartTab from './components/cart/cartTab.jsx'
 import { BuyNow } from './components/BuyNow.jsx'
 import UserOrders from './components/Myorders.jsx'
+import CheckOutPage from './components/shop/CheckOutPage.jsx';
 
 function App() {
  
@@ -70,6 +71,7 @@ function App() {
       <Route path='/about'element={<AboutUs />} />
       <Route path='/contact'element={<ContactUs />} />
       <Route path='/shop'element={<Shop />} />
+      <Route path='/cart/checkout'element={<CheckOutPage />} />
       <Route path='/profile'element={<ProfilePage />} />
       <Route path='/verification' element={<OtpVerification />} />
       <Route path='/shop/:slug' element={<Detail />} />

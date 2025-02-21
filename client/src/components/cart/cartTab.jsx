@@ -1,6 +1,7 @@
 import React from 'react' 
 import { useSelector, useDispatch } from 'react-redux' 
 import CartItem from './cartItems.jsx';
+import { useNavigate } from 'react-router-dom';
 
 
 const CartTab = ({ isCartSliderOpen, toggleCartSlider}) => {
@@ -8,13 +9,17 @@ const CartTab = ({ isCartSliderOpen, toggleCartSlider}) => {
    
     const carts = useSelector(store => store.cart.items);
 
+    const navigate = useNavigate()
 
+    const handleCheckoutbtn = () => {
+       navigate("/cart/checkout")
+    }
    
     const handleCloseTabCart = () => {
        toggleCartSlider()
     }
   return (
-    <div className={`fixed top-0 right-0 bg-gray-700 shadow-2xl w-96 h-full grid grid-rows-[60px_1fr_60px] 
+    <div className={`fixed top-0 right-0 bg-white shadow-2xl w-96 h-fit grid grid-rows-[60px_1fr_60px] 
     transform transition-transform duration-500 
     ${isCartSliderOpen === false ? "translate-x-full" : ""}
     `}>
@@ -24,9 +29,15 @@ const CartTab = ({ isCartSliderOpen, toggleCartSlider}) => {
                 <CartItem key={key} data={item}/>
             )}
         </div>
-        <div className='grid grid-cols-2'>
-            <button className='bg-black text-white' onClick={() => handleCloseTabCart()}>CLOSE</button>
+       <div className='grid grid-cols-2 gap-3 bg-white'>
+        <div onClick={handleCloseTabCart} className='bg-black text-white rounded-lg flex justify-center items-center text-xl cursor-pointer hover:scale-105'>
+            Close
         </div>
+        <div onClick={ () => {handleCheckoutbtn(), handleCloseTabCart()}} className='bg-black rounded-lg text-white flex justify-center items-center text-xl cursor-pointer hover:scale-105'>
+            Check Out
+        </div>
+              
+       </div>
     </div>
   )
 }

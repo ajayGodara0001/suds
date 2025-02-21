@@ -6,23 +6,28 @@ import { useLocation } from "react-router-dom";
 
 export const BuyNow = () => {
     const location = useLocation(); // ✅ Get current location
-    const { productName, price } = location.state || {}; // ✅ Extract passed data
+    const { productName, price, prequantity} = location.state || {}; // ✅ Extract passed data
 
 
     const backend_url = import.meta.env.VITE_BACKEND_URI
 
     const [address, setAddress] = useState("");
     const [country, setCountry] = useState("");
-    const [quantity, setQuantity] = useState(1);
+    const [quantity, setQuantity] = useState(prequantity || 1);
     const [paymentStatus, setPaymentStatus] = useState("Pending");
     const navigate = useNavigate();
 
     const handleBuyNow = async () => {
 
+        
+        const cartItems = [{
+            name: productName,
+            price: price,
+            quantity: quantity ,
+            totalPrice: price*quantity 
+        }]
         await axios.post(`${backend_url}/api/shop/order`, {
-            productName: productName,
-            price: price*quantity,
-            quantity,
+            cartItems,
             address,
             country,
             paymentStatus
