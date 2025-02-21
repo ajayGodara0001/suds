@@ -1,4 +1,4 @@
-
+import ScrollToTop from "./scroll.jsx"
 import './App.css'
 import "./index.css";
 import {  Route, Routes } from   "react-router-dom"
@@ -63,6 +63,7 @@ function App() {
   <Navbar  toggleSearchSlider={toggleSearchSlider} toggleCartSlider={toggleCartSlider} toggleProfileSlider={toggleProfileSlider} isAuthenticated={isAuthenticated} />
   <SearchSlide isSearchSliderOpen={isSearchSliderOpen} toggleSearchSlider={toggleSearchSlider} />
   <CartTab isCartSliderOpen={isCartSliderOpen} toggleCartSlider={toggleCartSlider} />
+   <ScrollToTop /> 
    <Routes >
       <Route path='/'element={<Home />} />
       <Route path='/:slug'element={<Detail />} />

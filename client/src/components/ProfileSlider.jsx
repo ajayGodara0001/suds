@@ -20,7 +20,7 @@ const ProfilePage = ({ user, isProfileSlider, toggleProfileSlider }) => {
 
     return (
 
-        <div className={`fixed top-0 right-0 w-80 h-full bg-white shadow-lg p-6 transform transition-transform flex flex-col justify-start duration-300 mt-16 ${isProfileSlider ? "translate-x-0" : "translate-x-full"}`}>
+        <div className={`fixed top-0 right-0 w-80 h-full z-50 bg-white shadow-lg p-6 transform transition-transform flex flex-col justify-start duration-300 mt-16 ${isProfileSlider ? "translate-x-0" : "translate-x-full"}`}>
            <div>
            <div className="flex justify-between  mb-4 items center">
                 <h2 className="text-2xl font-semibold ">Profile</h2>
