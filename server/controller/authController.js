@@ -138,12 +138,7 @@ export const forgotPassword =  async (req, res) => {
       const resetLink = `${client_uri}/reset-password/${token}`;
   
 
-      res.cookie('token', token, {
-        httpOnly: true,  // Cookie cannot be accessed via JavaScript (more secure)
-        secure: true,    // Only send the cookie over HTTPS (required for production)
-        sameSite: "None", // Required for cross-origin cookies (Vercel & Render)
-        maxAge: 60 * 60 * 1000, // 1-hour expiration
-      });
+     
       const linkResetPassword =   `<p>Click <a href="${resetLink}">here</a> to reset your password.</p>`
      
       sendVerificationEmail(email, linkResetPassword)
