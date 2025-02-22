@@ -76,7 +76,8 @@ export default function Login() {
             {loading ? "Loging..." : "Login"}
           </button>
         </form>
-        <a href="#" className="text-blue-500 text-sm block mt-2">Forgot Password?</a>
+         <NavLink to="/forgot-password" className="text-blue-500 text-sm block mt-2">forgot password</NavLink>
+         
         <hr className="my-4" />
        
         <NavLink  className="text-blue-500 font-semibold" to="/register">Register Now</NavLink>

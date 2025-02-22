@@ -1,6 +1,6 @@
 import express from "express";
 import { validateLogin, validateSignUp } from "../middleware/validateRequest.js";
-import { login, signUp, verifyEmail } from "../controller/authController.js";
+import { forgotPassword, login, resetPassword, signUp, verifyEmail } from "../controller/authController.js";
 import jwt, { decode } from "jsonwebtoken"
 const router = express.Router();
 
@@ -14,6 +14,13 @@ router.post('/verify-email', verifyEmail);
 // Login Route
 router.post('/login', validateLogin, login);
 
+
+// forgoot password 
+router.post('/forgot-password', forgotPassword)
+
+
+// resetPassword
+router.post('/reset-password/:token', resetPassword )
 
 // logout route
 router.post("/logout", (req, res) => {

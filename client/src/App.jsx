@@ -23,6 +23,8 @@ import CartTab from './components/cart/cartTab.jsx'
 import { BuyNow } from './components/BuyNow.jsx'
 import UserOrders from './components/Myorders.jsx'
 import CheckOutPage from './components/shop/CheckOutPage.jsx';
+import ForgotPassword from "./components/forgotPassword.jsx";
+import ResetPassword from "./components/resetPassword.jsx";
 
 function App() {
  
@@ -78,6 +80,9 @@ function App() {
       <Route path='/shop/:slug' element={<Detail />} />
       <Route path='/buynow' element={<BuyNow />} />
       <Route path='/myorders' element={<UserOrders />} />
+
+      <Route path="/forgot-password" element={<ForgotPassword />} />
+      <Route path="/reset-password/:token" element={<ResetPassword />} />
     </Routes>
     <Footer />
     </>

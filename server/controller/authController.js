@@ -1,7 +1,8 @@
 import User from '../models/user.model.js';
 import crypto from 'crypto'; 
 import { verifyEmailAddress } from "../utils/validateEmail.js";
-
+import bcrypt from 'bcryptjs';
+import jwt from "jsonwebtoken"
 import { sendVerificationEmail } from "../middleware/sendEmail.js";
 
 export const signUp = async (req, res) => {
@@ -118,4 +119,56 @@ export const verifyEmail = async (req, res) => {
       res.status(500).json({ message: 'Error verifying email' });
     }
   };
+  
+
+  
+  // 🔹 Step 1: Handle Forgot Password Request
+export const forgotPassword =  async (req, res) => {
+      try {
+      const { email } = req.body;
+    
+      const user = await User.findOne({ email });
+  
+      if (!user) return res.status(400).json({ message: "User not found forgoot password" });
+  
+      // Generate reset token
+      const token = jwt.sign({ id: user._id },process.env.JWT_SECRET, { expiresIn: '1h'});
+  
+  
+      const resetLink = `http://localhost:5173/reset-password/${token}`;
+  
+
+      res.cookie('token', token, {
+        httpOnly: true,  // Cookie cannot be accessed via JavaScript (more secure)
+        secure: true,    // Only send the cookie over HTTPS (required for production)
+        sameSite: "None", // Required for cross-origin cookies (Vercel & Render)
+        maxAge: 60 * 60 * 1000, // 1-hour expiration
+      });
+      const linkResetPassword =   `<p>Click <a href="${resetLink}">here</a> to reset your password.</p>`
+     
+      sendVerificationEmail(email, linkResetPassword)
+  
+      return res.json({ message: "Password reset link sent to your email" });
+      } catch (error) {
+        console.log(error.message)
+      res.status(500).json({ message: 'forgot password error' });
+      }
+  }
+  
+  // 🔹 Step 2: Handle Password Reset
+export const resetPassword =  async (req, res) => {
+      const { token } = req.params;
+      const { password } = req.body;
+  
+      try {
+          const decoded = jwt.verify(token, process.env.JWT_SECRET );
+          const hashedPassword = await bcrypt.hash(password, 10);
+          await User.findByIdAndUpdate(decoded.id, { password: hashedPassword });
+  
+          res.json({ message: "Password reset successful" });
+      } catch (err) {
+          res.status(400).json({ message: "Invalid or expired token" });
+      }
+  }
+
   

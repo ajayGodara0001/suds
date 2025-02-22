@@ -6,9 +6,10 @@ import dotenv from "dotenv";
 dotenv.config();
  
 
+const client_uri = process.env.CLIENT_URL
 import cors from "cors";
 app.use(cors({
-  origin: process.env.CLIENT_URL, // Allow frontend
+  origin: client_uri, // Allow frontend
   credentials: true // Allow cookies
 }));
 import cookieParser from "cookie-parser";
