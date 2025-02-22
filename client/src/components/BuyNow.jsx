@@ -1,58 +1,62 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 import toast from 'react-hot-toast';
-import { useLocation } from "react-router-dom";
+import { handlePayment } from "../../utils/paymentService";  // ✅ Import payment function
 
 export const BuyNow = () => {
-    const location = useLocation(); // ✅ Get current location
-    const { productName, price, prequantity} = location.state || {}; // ✅ Extract passed data
-
-
-    const backend_url = import.meta.env.VITE_BACKEND_URI
+    const location = useLocation();
+    const { productName, price, prequantity } = location.state || {};
+    const backend_url = import.meta.env.VITE_BACKEND_URI;
 
     const [address, setAddress] = useState("");
     const [country, setCountry] = useState("");
     const [quantity, setQuantity] = useState(prequantity || 1);
-    const [paymentStatus, setPaymentStatus] = useState("Pending");
     const navigate = useNavigate();
 
-    const handleBuyNow = async () => {
+    // ✅ Save Order After Payment
+    const saveOrder = async (paymentStatus) => {
+        try {
+            const cartItems = [{
+                name: productName,
+                price: price,
+                quantity: quantity,
+                totalPrice: price * quantity,
+            }];
 
-        
-        const cartItems = [{
-            name: productName,
-            price: price,
-            quantity: quantity ,
-            totalPrice: price*quantity 
-        }]
-        await axios.post(`${backend_url}/api/shop/order`, {
-            cartItems,
-            address,
-            country,
-            paymentStatus
-        }, { withCredentials: true })
-            .then((res) => {
-                navigate("/")
-                toast.success(res.data.message, {
-                    position: "top-center",
-                    style: { marginTop: "50px" }, // Moves it slightly lower from the top
-                  })
-            })
-            .catch((error) => {
-                console.error("Error:", error.response?.data || error.message);
+            const res = await axios.post(`${backend_url}/api/shop/order`, {
+                cartItems,
+                address,
+                country,
+                paymentStatus,
+            }, { withCredentials: true });
 
-                toast.error(error.response?.data?.message || error.message);
+            navigate("/");
+            toast.success(res.data.message);
+        } catch (err) {
+            toast.error("Failed to save order.");
+        }
+    };
 
-            })
+    // ✅ Check fields before calling payment function
+    const handleOrderClick = () => {
+        if (!address.trim() || !country.trim()) {
+            toast.error("Please enter your address and country before proceeding.");
+            return;
+        }
 
+        handlePayment(
+            { productName, price:price * quantity, address, country }, 
+            backend_url, 
+            saveOrder
+        );
     };
 
     return (
         <div className="min-h-screen flex items-center justify-center bg-gray-100 p-4">
             <div className="w-full max-w-lg bg-white shadow-lg rounded-lg p-6">
                 <h2 className="text-2xl font-bold text-center mb-4">{productName}</h2>
-                <p className="text-lg text-gray-600 text-center mb-4">Price: <span className="font-semibold">${price*quantity}</span></p>
+                <p className="text-lg text-gray-600 text-center mb-4">Price: <span className="font-semibold">${price * quantity}</span></p>
 
                 <div className="space-y-4">
                     {/* Quantity */}
@@ -91,47 +95,15 @@ export const BuyNow = () => {
                         />
                     </div>
 
-                    {/* Payment Status */}
-                    <div>
-                        <label className="block text-gray-700 font-medium">Payment Status:</label>
-                        <div className="flex items-center space-x-4 mt-2">
-                            <label className="flex items-center space-x-2">
-                                <input
-                                    type="radio"
-                                    name="payment"
-                                    value="Pending"
-                                    checked={paymentStatus === "Pending"}
-                                    onChange={() => setPaymentStatus("Pending")}
-                                    className="w-5 h-5"
-                                />
-                                <span>Pending</span>
-                            </label>
-                            <label className="flex items-center space-x-2">
-                                <input
-                                    type="radio"
-                                    name="payment"
-                                    value="Paid"
-                                    checked={paymentStatus === "Paid"}
-                                    onChange={() => setPaymentStatus("Paid")}
-                                    className="w-5 h-5"
-                                />
-                                <span>Paid</span>
-                            </label>
-                        </div>
-                    </div>
-
                     {/* Confirm Order Button */}
                     <button
-                        onClick={() => handleBuyNow({ productName, price, quantity, address, country, paymentStatus })}
+                        onClick={handleOrderClick}
                         className="w-full bg-blue-600 text-white py-2 rounded-md text-lg font-semibold hover:bg-blue-700 cursor-pointer transition duration-200"
                     >
-                        Confirm Order
+                        Pay & Confirm Order
                     </button>
                 </div>
             </div>
         </div>
     );
-
 };
-
-

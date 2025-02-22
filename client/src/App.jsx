@@ -28,7 +28,7 @@ import ResetPassword from "./components/resetPassword.jsx";
 
 function App() {
  
-
+   let  userId
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [user, setUser] = useState({})
   useEffect(() => {
@@ -36,6 +36,7 @@ function App() {
     axios.get(`${backend_url}/api/auth/check`, { withCredentials: true }) 
       .then((response) => { 
       setUser(response.data.user)
+      
         setIsAuthenticated(response.data.isAuthenticated);
       })
       .catch(() => {  
