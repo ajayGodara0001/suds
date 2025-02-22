@@ -134,8 +134,8 @@ export const forgotPassword =  async (req, res) => {
       // Generate reset token
       const token = jwt.sign({ id: user._id },process.env.JWT_SECRET, { expiresIn: '1h'});
   
-  
-      const resetLink = `http://localhost:5173/reset-password/${token}`;
+      const client_uri = process.env.CLIENT_URL
+      const resetLink = `${client_uri}/reset-password/${token}`;
   
 
       res.cookie('token', token, {
