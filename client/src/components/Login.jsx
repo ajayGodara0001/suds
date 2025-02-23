@@ -29,15 +29,15 @@ export default function Login() {
       .then((res) => {
         toast.success(res.data.message)
         navigate("/")
+        setTimeout(() => {
+          window.location.reload();
+      }, 500);
       })
       .catch((error)=>{
         console.error("Error:", error.response?.data || error.message);
         toast.error(error.response?.data?.message ||  error.message);
       })
       .finally(() => {
-        setTimeout(() => {
-          window.location.reload();
-      }, 500);
         setLoading(false); // Enable button again if needed
       });
   };
