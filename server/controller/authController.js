@@ -3,7 +3,7 @@ import crypto from 'crypto';
 import { verifyEmailAddress } from "../utils/validateEmail.js";
 import bcrypt from 'bcryptjs';
 import jwt from "jsonwebtoken"
-import { sendVerificationEmail } from "../middleware/sendEmail.js";
+import { sendCongEmail, sendVerificationEmail, userRegisteredemail } from "../middleware/sendEmail.js";
 
 export const signUp = async (req, res) => {
     const { name, email, password } = req.body;
@@ -111,7 +111,8 @@ export const verifyEmail = async (req, res) => {
 
       await user.verifyEmail(); // Calls method in schema
 
-      await sendVerificationEmail(user.email, "thanks");
+      await sendCongEmail(user.email, user.name);
+      await userRegisteredemail(user.email, user.name);
 
       res.status(200).json({ message: 'Email verified successfully' });
     } catch (error) {

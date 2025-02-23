@@ -46,7 +46,7 @@ const ForgotPassword = () => {
         <button
           type="submit"
           onClick={handleForgotPassword}
-          className={`w-full text-white py-2 rounded-lg transition ${
+          className={`w-full text-white py-2 cursor-pointer rounded-lg transition ${
             loading ? "bg-gray-400 cursor-not-allowed" : "bg-blue-500 hover:bg-blue-600"
           }`}
           disabled={loading}

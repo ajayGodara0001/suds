@@ -49,7 +49,7 @@ const OtpVerification = () => {
         <button
             type="submit"
             onClick={handleVerify}
-            className={`w-full text-white py-2 rounded-lg transition ${loading ? "bg-gray-400 cursor-not-allowed" : "bg-green-500 hover:bg-green-600"
+            className={`w-full text-white cursor-pointer py-2 rounded-lg transition ${loading ? "bg-gray-400 cursor-not-allowed" : "bg-green-500 hover:bg-green-600"
               }`}
             disabled={loading}
           >

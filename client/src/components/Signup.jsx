@@ -100,7 +100,7 @@ export default function Register() {
 
           <button
             type="submit"
-            className={`w-full text-white py-2 rounded-lg transition ${loading ? "bg-gray-400 cursor-not-allowed" : "bg-green-500 hover:bg-green-600"}`}
+            className={`w-full text-white py-2 rounded-lg transition cursor-pointer ${loading ? "bg-gray-400 cursor-not-allowed" : "bg-green-500 hover:bg-green-600"}`}
             disabled={loading}
           >
             {loading ? "Registering..." : "Register"}
