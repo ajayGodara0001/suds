@@ -67,3 +67,32 @@ export const userRegisteredemail = async (userEmail, userName) => {
         throw new Error('Failed to send email to us');
      }
 }
+export const sendResetPasswordEmail  = async (userEmail, resetLink) => {
+    try {
+         await transporter.sendMail({
+            from: '"Ajay Godara" <ajaygodara84557@gmail.com>', // sender address
+            to: userEmail, // Send notification to admin
+            subject: "🔐 Reset Your Password",
+            html: `
+            <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 20px; border: 1px solid #ddd;">
+              <h2 style="color: #007bff;">Reset Your Password</h2>
+              <p>Hello,</p>
+              <p>We received a request to reset your password. Click the button below to reset it:</p>
+              <div style="text-align: center; margin: 20px 0;">
+                <a href="${resetLink}" 
+                  style="background-color: #007bff; color: white; padding: 12px 20px; text-decoration: none; font-weight: bold; border-radius: 5px;">
+                  Reset Password
+                </a>
+              </div>
+              <p>If you did not request a password reset, please ignore this email.</p>
+              <p>This link will expire in <b>15 minutes</b>.</p>
+              <br>
+              <p>Best regards,<br><b>Suds Team</b></p>
+            </div>
+            `,
+          });
+          
+     } catch (error) {
+        throw new Error('Failed to send email to us');
+     }
+}

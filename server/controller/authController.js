@@ -3,7 +3,7 @@ import crypto from 'crypto';
 import { verifyEmailAddress } from "../utils/validateEmail.js";
 import bcrypt from 'bcryptjs';
 import jwt from "jsonwebtoken"
-import { sendCongEmail, sendVerificationEmail, userRegisteredemail } from "../middleware/sendEmail.js";
+import { sendCongEmail, sendResetPasswordEmail, sendVerificationEmail, userRegisteredemail } from "../middleware/sendEmail.js";
 
 export const signUp = async (req, res) => {
     const { name, email, password } = req.body;
@@ -137,12 +137,8 @@ export const forgotPassword =  async (req, res) => {
   
       const client_uri = process.env.CLIENT_URL
       const resetLink = `${client_uri}/reset-password/${token}`;
-  
-
      
-      const linkResetPassword =   `<p>Click <a href="${resetLink}">here</a> to reset your password.</p>`
-     
-      sendVerificationEmail(email, linkResetPassword)
+      sendResetPasswordEmail(email, resetLink)
   
       return res.json({ message: "Password reset link sent to your email" });
       } catch (error) {

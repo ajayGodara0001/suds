@@ -88,7 +88,7 @@ const CheckOutPage = () => {
 
                 <button 
                     onClick={handleCheckout}
-                    className="w-full bg-blue-600 text-white py-2 rounded-md text-lg font-semibold hover:bg-blue-700 transition duration-200"
+                    className="w-full  text-white py-2 rounded-md text-lg font-semibold  bg-green-500 hover:bg-green-600 cursor-pointer transition duration-200"
                 >
                     Pay & Confirm Order
                 </button>

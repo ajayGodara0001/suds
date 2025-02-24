@@ -12,6 +12,7 @@ export const BuyNow = () => {
     const [address, setAddress] = useState("");
     const [country, setCountry] = useState("");
     const [quantity, setQuantity] = useState(prequantity || 1);
+
     const navigate = useNavigate();
 
     // ✅ Save Order After Payment
@@ -31,11 +32,13 @@ export const BuyNow = () => {
                 paymentStatus,
             }, { withCredentials: true });
 
+            
             navigate("/");
             toast.success(res.data.message);
         } catch (err) {
             toast.error("Failed to save order.");
         }
+        
     };
 
     // ✅ Check fields before calling payment function
@@ -44,7 +47,7 @@ export const BuyNow = () => {
             toast.error("Please enter your address and country before proceeding.");
             return;
         }
-
+        
         handlePayment(
             { productName, price:price * quantity, address, country }, 
             backend_url, 
@@ -98,9 +101,9 @@ export const BuyNow = () => {
                     {/* Confirm Order Button */}
                     <button
                         onClick={handleOrderClick}
-                        className="w-full bg-blue-600 text-white py-2 rounded-md text-lg font-semibold hover:bg-blue-700 cursor-pointer transition duration-200"
+                        className={`w-full  text-white py-2 rounded-md text-lg font-semibold bg-green-500 hover:bg-green-600 cursor-pointer transition duration-200`}
                     >
-                        Pay & Confirm Order
+                        { "Pay and Order"}
                     </button>
                 </div>
             </div>
