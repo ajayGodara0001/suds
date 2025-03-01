@@ -1,46 +1,89 @@
-import React from "react";
+import React, { useState } from "react";
+import { FaMapMarkerAlt, FaPhone, FaClock, FaEnvelope } from 'react-icons/fa';
+import { MdKeyboardDoubleArrowRight } from "react-icons/md";
+import toast from 'react-hot-toast';
+import { NavLink } from "react-router-dom";
 
 const ContactUs = () => {
-  // Function to handle form submission (no email sending logic)
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const [result, setResult] = useState('Send Message');
+  const onSubmit = async (event) => {
+    event.preventDefault();
+    setResult('Sending....');
 
-    // Get form data
-    const formData = new FormData(e.target);
-    const data = Object.fromEntries(formData);
+    const formData = new FormData(event.target);
+    formData.append('access_key', 'd25ed56c-06b1-422c-9b5d-692599f4c19c');
 
-    // Log the data (for demonstration purposes)
-    console.log("Form Data:", data);
+    const response = await fetch('https://api.web3forms.com/submit', {
+      method: 'POST',
+      body: formData,
+    });
 
-    alert("Your message has been submitted!"); // Optional: Show a success message
+    const data = await response.json();
+
+    if (data.success) {
+      toast.success('Form Submitted Successfully');
+      setResult('Send Message');
+      event.target.reset();
+    } else {
+      console.log('Error', data);
+      setResult('Send Message');
+      toast.error(data.message);
+    }
   };
 
   return (
-    <div className="w-full min-h-screen flex flex-col">
+    <div className="w-full min-h-screen flex flex-col mb-20 gap-10">
       {/* Full-width div at the top */}
-      <div className="w-full h-[30vh] bg-gray-200 flex items-center justify-center">
-        <p className="text-xl font-bold">Contact Us</p>
+      <div className="w-full h-[30vh] bg-gray-200 flex flex-col items-center justify-center">
+        <p className="text-2xl font-bold pb-6">Contact Us</p>
+        <div>
+  <p className="text-xl flex items-center gap-1 justify-center">
+    <NavLink to="/">
+      <span>Home </span>
+    </NavLink>
+    <MdKeyboardDoubleArrowRight className="inline mt-1" />
+     Contact
+  </p>
+</div>
       </div>
 
       {/* Main Content */}
-      <div className="w-full flex-grow p-6 space-y-8">
+      <div className="w-full flex-grow p-6 text-xl space-y-8">
         {/* First Section */}
         <div className="w-full flex flex-col md:flex-row gap-8">
           {/* Contact Info Div */}
           <div className="w-full md:w-1/2 space-y-4">
             <h1 className="text-3xl font-bold">Contact Us</h1>
-            <p className="text-gray-600">
-              123 Main Street, City, State, ZIP Code
-            </p>
-            <p className="text-gray-600">Phone: +1 (123) 456-7890</p>
-            <p className="text-gray-600">Open Hours: Mon - Fri, 9 AM - 5 PM</p>
-            <p className="text-gray-600">Email: info@example.com</p>
+            <div className="flex items-center space-x-4">
+        <FaMapMarkerAlt className="h-6 w-6 text-gray-600" />
+        <p className="text-gray-600">
+          GJUS&T HISAR, HISAR, HARYANA, INDIA, 125001
+        </p>
+      </div>
+           
+      {/* Phone */}
+      <div className="flex items-center space-x-4">
+        <FaPhone className="h-6 w-6 text-gray-600" />
+        <p className="text-gray-600">Phone: +91 8168584557</p>
+      </div>
+
+      {/* Open Hours */}
+      <div className="flex items-center space-x-4">
+        <FaClock className="h-6 w-6 text-gray-600" />
+        <p className="text-gray-600">Open 24/7</p>
+      </div>
+
+      {/* Email */}
+      <div className="flex items-center space-x-4">
+        <FaEnvelope className="h-6 w-6 text-gray-600" />
+        <p className="text-gray-600">Email: ajaygodara84557@gmail.com</p>
+      </div>
           </div>
 
           {/* Google Map Div */}
           <div className="w-full md:w-1/2">
             <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3153.8354345093747!2d144.95373531531664!3d-37.816279742021665!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6ad642af0f11fd81%3A0xf577d2a6c5e4a5b1!2sMelbourne%20VIC%2C%20Australia!5e0!3m2!1sen!2sus!4v1622549402996!5m2!1sen!2sus"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3497.366292038018!2d75.7014153153841!3d29.14988898215393!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39123d9b8b3d4a9d%3A0x8f1c5c5b5b5b5b5b!2sGuru%20Jambheshwar%20University%20of%20Science%20and%20Technology%2C%20Hisar!5e0!3m2!1sen!2sin!4v1696861234567!5m2!1sen!2sin"
               width="100%"
               height="300"
               style={{ border: 0 }}
@@ -54,7 +97,7 @@ const ContactUs = () => {
         {/* Second Section - Form */}
         <div className="w-full max-w-2xl mx-auto">
           <h2 className="text-2xl font-bold mb-4">Chat with Us</h2>
-          <form onSubmit={handleSubmit} className="space-y-4">
+          <form onSubmit={onSubmit} className="space-y-4">
             {/* Name Input */}
             <div>
               <label htmlFor="name" className="block text-sm font-medium text-gray-700">
@@ -113,11 +156,14 @@ const ContactUs = () => {
 
             {/* Send Button */}
             <button
-              type="submit"
-              className="w-full bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600 transition-colors"
-            >
-              Send
-            </button>
+            type="submit"
+            className={`text-center text-white cursor-pointer font-bold hover:bg-blue-600 bg-blue-500 w-full text-2xl py-2 rounded-md ${
+              result === 'Sending....' ? 'opacity-50 cursor-not-allowed' : ''
+            }`}
+            disabled={result === 'Sending....'}
+          >
+            {result}
+          </button>
           </form>
         </div>
       </div>

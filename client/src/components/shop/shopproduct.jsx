@@ -20,7 +20,7 @@ const ProductCart = (props) => {
         navigate("/buynow", { state: { productName, price } });
     }
     return (
-    <div className='bg-white p-5 rounded-xl shadow-sm'>
+    <div className='bg-white p-5 rounded-xl shadow-sm  transform transition-all duration-300 hover:scale-105 hover:shadow-[0_0_15px_0_rgba(59,130,246,0.5)] hover:-rotate-1 hover:translate-y-2 hover:border-2 hover:border-blue-500'>
         <Link to={slug} className='z-0'>
             <img src={image} alt='' className='w-full  h-80 object-cover object-top drop-shadow-[0_80px_30px_#0007]' />
         </Link>

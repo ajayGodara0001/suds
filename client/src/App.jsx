@@ -28,7 +28,7 @@ import ResetPassword from "./components/resetPassword.jsx";
 
 function App() {
  
-   let  userId
+   
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [user, setUser] = useState({})
   useEffect(() => {

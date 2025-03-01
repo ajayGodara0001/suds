@@ -37,14 +37,15 @@ const Detail = () => {
         }));
     }
   return (
-    <div>
-        <h2 className='text-3xl text-center'>PRODUCT DETAIL</h2>
-        <div className="flex flex-col p-3 sm:flex-row gap-5 mt-5">
+    <div className='container mt-10 bg-grey-100 '>
+        <h2 className='text-3xl font-bold text-start ml-10'>PRODUCT DETAIL</h2>
+
+        <div className="flex flex-col p-3 sm:flex-row  mt-5">
             <div>
                 <img src={detail.image} alt="" className='w-full'/>
             </div>
             <div className='flex flex-col gap-5'>
-                <h1 className='text-4xl uppercase font-bold'>{detail.name}</h1>
+                <h1 className='text-4xl uppercase '>{detail.name}</h1>
                 <p className='font-bold text-3xl'>
                     ${detail.price}
                 </p>

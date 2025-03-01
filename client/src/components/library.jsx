@@ -12,7 +12,7 @@ import { ChevronLeft, ChevronRight } from "lucide-react"; // Icons for arrows
 
 export default function BlixLibrary() {
   return (
-    <div className="flex flex-col items-center text-center w-full m-10 h-fit p-6">
+    <div className="flex   flex-col items-center text-center w-full m-10 h-fit p-6">
       {/* Heading */}
       <div className="mb-6">
         <h1 className="text-3xl font-bold">Blix Online Library</h1>
