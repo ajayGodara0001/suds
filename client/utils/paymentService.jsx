@@ -29,7 +29,7 @@ export const handlePayment = async (orderDetails, backend_url, saveOrder) => {
         },{ withCredentials: true });
 
         const options = {
-            key: import.meta.env.RAZORPAY_KEY_ID, // ✅ Replace with your Razorpay Key
+            key: import.meta.env.VITE_RAZORPAY_KEY_ID, // ✅ Replace with your Razorpay Key
             amount: data.order.amount,
             currency: data.order.currency,
             name: "suds",
